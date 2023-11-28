@@ -1,5 +1,13 @@
 #!/bin/sh
 
+if [ $(git diff --check --cached | wc -c) -eq 0 ]; then
+    echo ""
+    echo "✗ Any files are added to commit"
+    echo "Add files to commit and retry"
+    exit 2
+fi
+
+# Check if gitleaks is installed
 if ! type gitleaks >/dev/null 2>/dev/null; then
 	echo ""
     echo "gitleaks could not be found"
@@ -10,4 +18,5 @@ if ! type gitleaks >/dev/null 2>/dev/null; then
     exit 2;
 fi
 
+# Run gitleaks
 gitleaks protect --verbose --redact --staged
