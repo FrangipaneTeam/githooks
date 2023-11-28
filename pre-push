@@ -1,0 +1,14 @@
+#!/bin/sh
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "main" ]; then
+    # Are you sure you want to push to protected branch?
+    read -p "You're about to push to main branch. Are you sure? [y/N] " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborting"
+        exit 1
+    fi
+    echo "Pushing to main branch"
+fi
